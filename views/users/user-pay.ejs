@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GETTO - Platba</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Gymplácká Evidence Totálně Transparentních Obligací</h1>
+        <h4>Přihlášen jako <%= current_user.name%> <a href="/" class="btn btn-warning">Změnit uživatele</a></h4>
+        <a href="/users/<%= current_user.id %>"class="btn btn-info">Zpět na přehled</a>
+        <h4>Platba uživateli <%= target_user.name%></h4>
+        
+        <h2> <%= debt %> Kč</h2>
+        <h6> <%= target_user.account_number %> </h6>
+
+        <form action="/users/pay-debt/<%= current_user.id %>/<%= target_user.id %>" method="POST" class="d-inline"><button type="submit" class="btn btn-success">Zaplaceno</button></form>
+    
+    </div>
+    
+</body>
+</html>

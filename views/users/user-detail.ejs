@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GETTO - Detail</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Gymplácká Evidence Totálně Transparentních Obligací</h1>
+        <h4>Přihlášen jako <%= current_user.name%> <a href="/" class="btn btn-warning">Změnit uživatele</a></h4>
+        <a href="/users/<%= current_user.id %>"class="btn btn-info">Zpět na přehled</a>
+        <h5>Seznam účtů od <%= target_user.name%></h5>
+
+        <% debts.forEach(debt =>{ %>
+            <div> <%=debt.createdAt.toLocaleDateString()%> : <%=debt.purpose%> : <b><%=debt.ammount%></b> / <%=debt.total%> Kč</div>
+        <% }) %>
+    </div>
+    
+</body>
+</html>

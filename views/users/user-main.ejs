@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GETTO - <%= current_user.name %></title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Gymplácká Evidence Totálně Transparentních Obligací</h1>
+        <h4>Přihlášen jako <%= current_user.name%> <a href="/" class="btn btn-warning">Změnit uživatele</a></h4>
+        
+        <a href="/users/new/<%= current_user.id %>" class="btn btn-info">Přidat účet</a>
+        
+        <% debts.forEach(debt =>{ %>
+            <p> <a href="/users/detail/<%= current_user.id %>/<%= debt.user.id %>" class="btn btn-light"><%=debt.user.name%></a>  <%=debt.ammount%> Kc : <a href="/users/pay/<%= current_user.id %>/<%= debt.user.id %>" class="btn btn-success">Zaplatit</a> </p>
+        <% }) %>
+
+        <h6>Seznam dlužníků</h6>
+        <% my_bills.forEach(bill =>{ %>
+            <div class="mb-2"> <%= users.find(usr => {return usr.id == bill.billTo}).name %> : <%=bill.purpose%> : <%=bill.ammount%> Kč 
+                <form action="/users/delete_bill/<%= current_user.id %>/<%= bill.id %>?_method=DELETE" method="POST" class="d-inline"><button type="submit" class="btn btn-danger">Delete</button></form>
+            </div>
+        <% }) %>
+    </div>
+    
+</body>
+</html>
