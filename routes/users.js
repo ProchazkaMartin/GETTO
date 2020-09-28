@@ -67,7 +67,7 @@ router.get(`/new/:id`, async (req,res)=>{
 router.post(`/:id`, async (req,res)=>{
     if(req.body.target==undefined){ console.log("target unspecified"); res.redirect(`/users/${req.params.id}`);return;}
     
-    let each_share = Math.round(Number(req.body.total) / req.body.target.length)
+    let each_share = Math.round(Math.abs(Number(req.body.total)) / req.body.target.length)
     let failed_cases = []
     let target_list = []
     if(typeof(req.body.target)==="string"){ target_list = [req.body.target]}
@@ -78,7 +78,7 @@ router.post(`/:id`, async (req,res)=>{
             let bill = new Bill({
                 billFrom:Number(req.params.id),
                 billTo:Number(target_id),
-                purpose:req.body.purpose,
+                purpose:req.body.purpose.replace(/\W/g, ''),
                 ammount:each_share,
                 total:Number(req.body.total)
             })
