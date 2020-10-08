@@ -2,19 +2,87 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GETTO v0.0</title>
+    <title>GETTO v0.1</title>
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4">Gymplácká Evidence Totálně Transparentních Obligací</h1>
-        <% users.forEach(user =>{ %>
-            <a href="/users/<%= user.id %>" class="btn btn-light"><h4><%= user.name %></h4></a>
-        <% }) %>
-    
+        <img class="navbar-brand" src="/images/logo.png" height="60">
+        <h3 class="mb-4 d-inline">Gymplácká Evidence Totálně Transparentních Obligací</h3>    
     </div>
+    <style>
+    body{
+        margin-top:20px;
+        background:#FAFAFA;
+    }
+    .order-card {
+        color: #fff;
+    }
     
+    .bg-c-blue {
+        background: linear-gradient(45deg,#000046,#1CB5E0);
+    }
+    
+    .bg-c-green {
+        background: linear-gradient(45deg,#00b09b,#96c93d);
+    }
+    
+    .bg-c-yellow {
+        background: linear-gradient(45deg,#FDC830,#F37335);
+    }
+    
+    .bg-c-pink {
+        background: linear-gradient(45deg,#ED213A,#93291E);
+    }
+    
+    
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        border: none;
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .card .card-block {
+        padding: 25px;
+    }
+    
+    .order-card i {
+        font-size: 26px;
+    }
+    
+    .f-left {
+        float: left;
+    }
+    
+    .f-right {
+        float: right;
+    }
+    </style>
+    <div class="container mt-4">
+        <div class="row">
+
+            <% const styles = ["bg-c-blue","bg-c-green","bg-c-yellow","bg-c-pink"];let i = 0;users.forEach(user =>{ %>
+                <div class="col-md-4 col-xl-3">
+                    <div class="card <%= styles[i] %> order-card">
+                        <div class="card-block">
+                            <h2 class="m-b-20"><%= user.name %></h2>
+                            <a href="/users/<%= user.id %>" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                
+            <% i+=1}) %>
+        </div>
+    </div>
+
+
+    
+
+
 </body>
 </html>

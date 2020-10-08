@@ -9,6 +9,7 @@ mongoose.connect("mongodb://localhost/getto",{useNewUrlParser:true,useUnifiedTop
 app.set("view engine","ejs")
 app.use(express.urlencoded({extended:false}))
 app.use(method_override("_method"))
+app.use(express.static('public'))
 
 
 const users = [

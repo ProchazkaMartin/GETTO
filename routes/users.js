@@ -27,13 +27,21 @@ async function redirect_to_main(req,res){
     for(const i in users){
         if(users[i].id != req.params.id){
             let debts_to_target = await Bill.find({billFrom:Number(users[i].id),billTo:Number(req.params.id)})
-            let debt_sum = 0
+            let debt_to_sum = 0
             debts_to_target.forEach(debt =>{
-                debt_sum += debt.ammount
+                debt_to_sum += debt.ammount
             })
+            let debts_from_target = await Bill.find({billFrom:Number(req.params.id),billTo:Number(users[i].id)})
+            let debt_from_sum = 0
+            debts_from_target.forEach(debt =>{
+                debt_from_sum += debt.ammount
+            })
+
             debt_list.push({
                 user:users[i],
-                ammount:debt_sum
+                ammount:debt_to_sum-debt_from_sum,
+                debt_to:debt_to_sum,
+                debt_from:debt_from_sum
             })
         }
     }
@@ -97,19 +105,24 @@ router.post(`/:id`, async (req,res)=>{
 router.get(`/pay/:user_id/:target_id`, async (req,res)=>{
 
     let debts_to_target = await Bill.find({billFrom:Number(req.params.target_id),billTo:Number(req.params.user_id)})
-    let debt_sum = 0
-    debts_to_target.forEach(debt =>{debt_sum += debt.ammount})
+    let debt_to_sum = 0
+    debts_to_target.forEach(debt =>{debt_to_sum += debt.ammount})
+
+    let debts_from_target = await Bill.find({billFrom:Number(req.params.user_id),billTo:Number(req.params.target_id)})
+    let debt_from_sum = 0
+    debts_from_target.forEach(debt =>{debt_from_sum += debt.ammount})
 
     res.render("users/user-pay",{
         current_user:users.find(usr => {return usr.id == req.params.user_id}),
         target_user:users.find(usr => {return usr.id == req.params.target_id}),
-        debt:debt_sum,
+        debt:debt_to_sum-debt_from_sum,
     })
 })
 
 router.post(`/pay-debt/:user_id/:target_id`, async (req,res)=>{
     //bills = await Bill.find({billFrom:Number(req.params.target_id),billTo:Number(req.params.user_id)})
     bills = await Bill.deleteMany({billFrom:Number(req.params.target_id),billTo:Number(req.params.user_id)})
+    bills = await Bill.deleteMany({billFrom:Number(req.params.user_id),billTo:Number(req.params.target_id)})
     
 
     res.redirect(`/users/${req.params.user_id}`)
